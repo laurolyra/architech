@@ -1,3 +1,8 @@
-import server from "./server";
+const express = require("express");
+const app = express();
 
-server.listen(8001);
+app.get("/", (_req: any, res: any) => {
+  res.status(200).send("Hello World!");
+});
+
+module.exports = app;

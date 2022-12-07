@@ -1,9 +1,6 @@
-import express from "express";
+const mainApp = require("./app");
+const port = 8001;
 
-const server = express();
-
-server.get("/", (request, response) => {
-  return response.send("Hello!!!!!!!!");
+mainApp.listen(port, () => {
+  return console.log(`Express is listening at http://localhost:${port}`);
 });
-
-export default server;

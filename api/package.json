@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx jest --watchAll --detectOpenHandles",
     "test-coverage": "npx jest --coverage",
-    "dev": "nodemon --watch 'src/' --exec 'ts-node src/app.ts' -e ts"
+    "dev": "npx nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",
