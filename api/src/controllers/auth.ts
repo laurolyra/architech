@@ -19,7 +19,7 @@ export const register = (req: Request, res: Response) => {
     console.log("bodyhash", bodyWithHash);
     const registerQuery = `INSERT INTO ${correctTable(
       baseUrl
-    )} (email, password, first_name, last_name, gender, age) VALUES ($1, $2, $3, $4, $5, $6)`;
+    )} (email, password, first_name, last_name, gender, age, phone) VALUES ($1, $2, $3, $4, $5, $6, $7)`;
     await pool.query(
       registerQuery,
       [
@@ -29,12 +29,15 @@ export const register = (req: Request, res: Response) => {
         bodyWithHash.last_name,
         bodyWithHash.gender,
         bodyWithHash.age,
+        bodyWithHash.phone,
       ],
       (error: any) => {
         if (error) {
           return res.status(500).json(error);
         }
-        return res.status(200).json("User Successfully created");
+        return correctTable(baseUrl) === "clients"
+          ? res.status(200).json("Client Successfully created")
+          : res.status(200).json("Architect Successfully created");
       }
     );
   };

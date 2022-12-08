@@ -1,4 +1,6 @@
 import architectRoutes from "./routes/architects";
+import clientRoutes from "./routes/clients";
+import ticketRoutes from "./routes/tickets";
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -16,5 +18,7 @@ app.get("/", (_req: any, res: any) => {
 });
 
 app.use("/api/architects", architectRoutes);
+app.use("/api/clients", clientRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 module.exports = app;
