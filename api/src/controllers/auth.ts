@@ -4,11 +4,18 @@ import { IArchitect } from "../types";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const correctTable = (URL: string) =>
-  URL === "/api/architects" ? "architects" : "clients";
+const correctTable = (URL: string) => {
+  switch (URL) {
+    case "/api/architects":
+      return "architects";
+    case "/api/clients":
+      return "clients";
+    default:
+      return "error_db";
+  }
+};
 
 export const register = (req: Request, res: Response) => {
-  // console.log("req", req.baseUrl);
   const { body, baseUrl } = req;
   const createUser = async () => {
     //hash password
@@ -16,10 +23,13 @@ export const register = (req: Request, res: Response) => {
     const hash = bcrypt.hashSync(body.password, salt);
     //add hash into body
     const bodyWithHash = { ...body, password: hash };
-    console.log("bodyhash", bodyWithHash);
-    const registerQuery = `INSERT INTO ${correctTable(
-      baseUrl
-    )} (email, password, first_name, last_name, gender, age, phone) VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+
+    const registerQuery = `INSERT INTO
+      ${correctTable(baseUrl)}
+      (email, password, first_name, last_name, gender, age, phone)
+      VALUES
+      ($1, $2, $3, $4, $5, $6, $7)`;
+
     await pool.query(
       registerQuery,
       [
@@ -38,12 +48,13 @@ export const register = (req: Request, res: Response) => {
         return correctTable(baseUrl) === "clients"
           ? res.status(200).json("Client Successfully created")
           : res.status(200).json("Architect Successfully created");
-      }
+      },
     );
   };
 
   //check if user exists;
   const userFound = `SELECT * from ${correctTable(baseUrl)} WHERE email= ($1)`;
+
   pool.query(
     userFound,
     [body.email],
@@ -55,13 +66,15 @@ export const register = (req: Request, res: Response) => {
         return res.status(409).json("User already exists!");
       }
       return createUser();
-    }
+    },
   );
 };
 
 export const login = (req: Request, res: Response) => {
   const { body, baseUrl } = req;
+
   const userFound = `SELECT * from ${correctTable(baseUrl)} WHERE email= ($1)`;
+
   pool.query(
     userFound,
     [body.email],
@@ -76,12 +89,13 @@ export const login = (req: Request, res: Response) => {
       //check password
       const checkPassword = bcrypt.compareSync(
         req.body.password,
-        results.rows[0].password
+        results.rows[0].password,
       );
       if (!checkPassword) {
         return res.status(400).json("Wrong username or password!");
       }
       const token = jwt.sign({ id: results.rows[0].id }, "jwtkey");
+
       const { password, ...other } = results.rows[0];
 
       res
@@ -90,7 +104,7 @@ export const login = (req: Request, res: Response) => {
         })
         .status(200)
         .json(other);
-    }
+    },
   );
 };
 
