@@ -1,7 +1,8 @@
+import express, { Request, Response } from "express";
 import pool from "../db";
 import { IArchitect } from "../types";
 
-export const getAll = (req: any, res: any) => {
+export const getAll = (req: Request, res: Response) => {
   pool.query(
     "SELECT * FROM architects",
     (error: any, results: { rows: IArchitect[] }) => {
