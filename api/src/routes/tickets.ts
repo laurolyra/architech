@@ -1,20 +1,20 @@
 import express from "express";
 import {
+  archiveTicket,
   createTicket,
   getAll,
   getById,
+  groupTickets,
   updateTicket,
-  // getByName,
 } from "../controllers/tickets";
 
 const router = express.Router();
 
 router.get("/", getAll);
-router.get("/:id", getById);
-router.put("/:id", updateTicket);
+router.get("/group", groupTickets);
 router.post("/new", createTicket);
-// router.get("/search", getByName);
-// router.post("/login", login);
-// router.post("/logout", logout);
+router.get("/:id", getById);
+router.put("/:id/archive", archiveTicket);
+router.put("/:id", updateTicket);
 
 export default router;

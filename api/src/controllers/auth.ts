@@ -54,7 +54,6 @@ export const register = (req: Request, res: Response) => {
       if (results.rows.length > 0) {
         return res.status(409).json("User already exists!");
       }
-      // return res.status(200).json("ok");
       return createUser();
     }
   );

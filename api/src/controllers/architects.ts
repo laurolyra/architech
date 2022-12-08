@@ -8,7 +8,10 @@ export const getAll = (req: Request, res: Response) => {
     "SELECT * FROM architects",
     (error: any, results: { rows: IArchitect[] }) => {
       if (error) {
-        throw error;
+        return res.status(500).json(error);
+      }
+      if (results.rows.length === 0) {
+        return res.status(404).json("No architect found");
       }
       res.status(200).json(results.rows);
     }
@@ -22,7 +25,10 @@ export const getByName = (req: Request, res: Response) => {
     [body.name],
     (error: any, results: { rows: IArchitect[] }) => {
       if (error) {
-        throw error;
+        return res.status(500).json(error);
+      }
+      if (results.rows.length === 0) {
+        return res.status(404).json("No architect found");
       }
       res.status(200).json(results.rows);
     }
@@ -30,13 +36,17 @@ export const getByName = (req: Request, res: Response) => {
 };
 
 export const getById = (req: Request, res: Response) => {
+  // console.log("getById", req);
   const { params } = req;
   pool.query(
     "SELECT * FROM architects WHERE id = ($1)",
     [params.id],
     (error: any, results: { rows: IArchitect[] }) => {
       if (error) {
-        throw error;
+        return res.status(500).json(error);
+      }
+      if (results.rows.length === 0) {
+        return res.status(404).json("No architect found");
       }
       res.status(200).json(results.rows[0]);
     }
@@ -51,7 +61,7 @@ export const updateArchitect = (req: Request, res: Response) => {
     [first_name, last_name, email, phone, id],
     (error: any, results: ResultBuilder) => {
       if (error) {
-        throw error;
+        return res.status(500).json(error);
       }
       res
         .status(200)
@@ -67,7 +77,7 @@ export const deleteArchitect = (req: Request, res: Response) => {
     [params.id],
     (error: any, results: ResultBuilder) => {
       if (error) {
-        throw error;
+        return res.status(500).json(error);
       }
       res.status(200).json({
         status: results.command,

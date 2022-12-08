@@ -7,7 +7,10 @@ export const getAll = (req: Request, res: Response) => {
     "SELECT * FROM clients",
     (error: any, results: { rows: IClient[] }) => {
       if (error) {
-        throw error;
+        return res.status(500).json(error);
+      }
+      if (results.rows.length === 0) {
+        return res.status(404).json("No client found");
       }
       res.status(200).json(results.rows);
     }
