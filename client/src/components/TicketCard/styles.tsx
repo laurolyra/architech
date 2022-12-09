@@ -6,11 +6,11 @@ export const CardContainer = styled.div`
     margin: 1rem 0;
     border-radius: ${theme.border.logo};
     box-shadow: ${theme.boxShadow.small};
-    padding: ${theme.spacing.xl};
+    padding: ${theme.spacing.l};
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 8rem;
+    min-height: 6rem;
   `}
 `;
 

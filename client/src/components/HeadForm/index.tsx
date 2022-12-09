@@ -8,7 +8,7 @@ import * as Common from '../../styles/common';
 const HeadForm = () => {
   const { currentUser } = useContext(AuthContext);
   const [architectList, setArchitectList] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const priceRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -32,6 +32,10 @@ const HeadForm = () => {
     const price = priceRef.current?.value;
     const description = descriptionRef.current?.value;
     const architectId = architectRef.current?.value;
+    const arrayValues = [price, description, architectId];
+    if (arrayValues.some((el) => !el)) {
+      return setError('please fill all fields');
+    }
     try {
       const res = await api.post('/tickets/new', {
         price,

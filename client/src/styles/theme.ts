@@ -6,6 +6,10 @@ export default {
   },
   spacing: {
     xl: '3rem',
+    l: '2rem',
+    m: '1rem',
+    sm: '0.8rem',
+    xs: '0.4rem',
   },
   font: {
     xl: '40px',
