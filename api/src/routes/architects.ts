@@ -6,15 +6,16 @@ import {
   updateArchitect,
 } from "../controllers/architects";
 import { register, login, logout } from "../controllers/auth";
+import { auth } from "../middlewares/auth";
 
 const router = express.Router();
 
-router.get("/", getAll);
-router.get("/search", getByName);
-router.get("/:id", getById);
-router.put("/:id", updateArchitect);
+router.get("/", auth, getAll);
+router.get("/search", auth, getByName);
+router.get("/:id", auth, getById);
+router.put("/:id", auth, updateArchitect);
 router.post("/register", register);
 router.post("/login", login);
-router.post("/logout", logout);
+router.post("/logout", auth, logout);
 
 export default router;
