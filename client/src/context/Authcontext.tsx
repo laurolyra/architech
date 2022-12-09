@@ -37,6 +37,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
   const logout = async () => {
     await api.post('/auth/logout');
     setCurrentUser(null);
+    Cookies.remove('auth_token');
   };
 
   useEffect(() => {
