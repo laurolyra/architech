@@ -20,7 +20,7 @@ type User = {
 interface IUserInfo {
   currentUser: User;
   login: (role: string, inputs: object) => void;
-  logout: () => void;
+  logout: (role: string) => void;
 }
 
 const initialValue = {
@@ -45,8 +45,8 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     Cookies.set('auth_token', token);
   };
 
-  const logout = async () => {
-    await api.post('/auth/logout');
+  const logout = async (role: string) => {
+    await api.post(`/${role}/logout`);
     setCurrentUser(null);
     Cookies.remove('auth_token');
   };
