@@ -5,13 +5,15 @@ import ticketRoutes from "./routes/tickets";
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const cors = require("cors");
 
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  })
+  }),
 );
+app.use(cors());
 
 app.get("/", (_req: any, res: any) => {
   res.status(200).send("Hello World!");

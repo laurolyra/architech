@@ -1,12 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import logo from '../../assets/architech_logo_raw.png';
-import { api } from '../../services/api';
+import { AuthContext } from '../../context/Authcontext';
 import * as S from './styles';
 
 function Home() {
-  const [role, setRole] = useState('client');
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const { login } = useContext(AuthContext);
+  const [role, setRole] = useState('clients');
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleChangeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -14,12 +15,12 @@ function Home() {
     setRole(target.value);
   };
 
-  const login = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const getInfo = api
-      .get('/ditto')
-      .then((res) => console.log('res:', res.data));
-    return getInfo;
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    const loginBody = { email: email, password: password };
+    return login(role, loginBody);
   };
 
   return (
@@ -31,12 +32,12 @@ function Home() {
       {/* <S.Typography as="p">Texto</S.Typography> */}
       <h2>Welcome!</h2>
       <h2>Please sign in</h2>
-      <form onSubmit={login}>
+      <form onSubmit={handleLogin}>
         <div>
-          <button value="client" onClick={handleChangeRole}>
+          <button value="clients" onClick={handleChangeRole}>
             Client
           </button>
-          <button value="architect" onClick={handleChangeRole}>
+          <button value="architects" onClick={handleChangeRole}>
             Architect
           </button>
         </div>

@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import MainRoutes from './routes';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthContextProvider } from './context/Authcontext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,9 +14,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <MainRoutes />
-      </BrowserRouter>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <MainRoutes />
+        </BrowserRouter>
+      </AuthContextProvider>
       <GlobalStyles />
     </ThemeProvider>
   </React.StrictMode>

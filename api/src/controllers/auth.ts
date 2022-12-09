@@ -79,7 +79,6 @@ export const login = (req: Request, res: Response) => {
     userFound,
     [body.email],
     (error: any, results: { rows: IArchitect[] }) => {
-      console.log(results.rows);
       if (error) {
         return res.status(500).json(error);
       }
@@ -95,15 +94,13 @@ export const login = (req: Request, res: Response) => {
         return res.status(400).json("Wrong username or password!");
       }
       const token = jwt.sign({ id: results.rows[0].id }, "jwtkey");
-
       const { password, ...other } = results.rows[0];
-
       res
         .cookie("access_token", token, {
           httpOnly: true,
         })
         .status(200)
-        .json(other);
+        .json({ ...other, token });
     },
   );
 };

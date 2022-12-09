@@ -1,5 +1,6 @@
-import { api } from '../services/api';
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import { api } from '../services/api';
+import Cookies from 'js-cookie';
 
 type AuthContextProps = {
   children: ReactNode;
@@ -7,7 +8,7 @@ type AuthContextProps = {
 
 interface IUserInfo {
   currentUser: object | null;
-  login: (inputs: object) => void;
+  login: (role: string, inputs: object) => void;
   logout: () => void;
 }
 
@@ -26,9 +27,11 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     return localStorageItem || initialValue.currentUser;
   });
 
-  const login = async (inputs: object) => {
-    const res = await api.post('/auth/login', inputs);
-    setCurrentUser(res.data);
+  const login = async (role: string, inputs: object) => {
+    const res = await api.post(`/${role}/login`, inputs);
+    const { token, ...other } = res.data;
+    setCurrentUser(other);
+    Cookies.set('auth_token', token);
   };
 
   const logout = async () => {
