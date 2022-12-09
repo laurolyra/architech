@@ -33,10 +33,12 @@ const TicketList = () => {
 
   return (
     <S.TicketListContainer>
-      <h1>TicketList</h1>
-      {ticketList.map((ticket: ITicket) => (
-        <TicketCard key={ticket.id} ticket={ticket as ITicket} />
-      ))}
+      <h1>Your tickets</h1>
+      <S.TicketCardsRow>
+        {ticketList.map((ticket: ITicket) => (
+          <TicketCard key={ticket.id} ticket={ticket as ITicket} />
+        ))}
+      </S.TicketCardsRow>
     </S.TicketListContainer>
   );
 };

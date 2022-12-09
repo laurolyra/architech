@@ -3,6 +3,7 @@ import logo from '../../assets/architech_logo_raw.png';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/Authcontext';
 import * as S from './styles';
+import * as Common from '../../styles/common';
 
 function Home() {
   const { login } = useContext(AuthContext);
@@ -54,8 +55,8 @@ function Home() {
           <input ref={emailRef} type="text" placeholder="email" />
           <input ref={passwordRef} type="password" placeholder="password" />
         </div>
-        <button type="submit">Login</button>
-        {error ? <S.ErrorMessage>{error}</S.ErrorMessage> : null}
+        <Common.FormButton type="submit">Login</Common.FormButton>
+        {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}
       </form>
     </S.HomeContainer>
   );

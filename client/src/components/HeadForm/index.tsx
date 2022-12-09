@@ -3,6 +3,7 @@ import { AuthContext } from '../../context/Authcontext';
 import api from '../../services/api';
 import { IPerson } from '../../types';
 import * as S from './styles';
+import * as Common from '../../styles/common';
 
 const HeadForm = () => {
   const { currentUser } = useContext(AuthContext);
@@ -63,7 +64,8 @@ const HeadForm = () => {
           </option>
         ))}
       </select>
-      <S.FormButton type="submit">Send</S.FormButton>
+      <Common.FormButton type="submit">Send</Common.FormButton>
+      {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}
     </S.FormContainer>
   );
 };

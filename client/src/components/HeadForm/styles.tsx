@@ -6,6 +6,7 @@ export const FormContainer = styled.form`
     background-color: ${theme.colors.blueLight};
     border-radius: ${theme.border.logo};
     padding: ${theme.spacing.xl};
+    box-shadow: ${theme.boxShadow.large};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,12 +30,4 @@ export const ProposalInput = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const FormButton = styled.button`
-  ${({ theme }) => css`
-    padding: 0.5rem 2rem;
-    max-width: 8rem;
-    text-align: center;
-  `}
 `;
