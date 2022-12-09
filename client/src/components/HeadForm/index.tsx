@@ -61,7 +61,9 @@ const HeadForm = () => {
       </S.ProposalInput>
       <textarea ref={descriptionRef} placeholder="description" />
       <select ref={architectRef} placeholder="description">
-        <option disabled>Select an architect</option>
+        <option selected disabled>
+          Select an architect
+        </option>
         {architectList.map((arch: IPerson) => (
           <option key={arch.id} value={arch.id}>
             {arch.first_name} {arch.last_name}

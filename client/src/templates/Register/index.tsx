@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { ChangeEventHandler, useRef, useState } from 'react';
 import logo from '../../assets/architech_logo_raw.png';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
+import * as Common from '../../styles/common';
 import api from '../../services/api';
 
 const Register = () => {
@@ -18,13 +19,7 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleChangeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const target = e.target as HTMLInputElement;
-    setRole(target.value);
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     const email = emailRef.current?.value;
     const firstName = firstNameRef.current?.value;
@@ -63,34 +58,36 @@ const Register = () => {
         <img src={logo} className="App-logo" alt="logo" />
       </S.LogoBorder>
 
-      {/* <S.Typography as="p">Texto</S.Typography> */}
-      <h2>Register</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <button value="clients" onClick={handleChangeRole}>
-            Client
-          </button>
-          <button value="architects" onClick={handleChangeRole}>
-            Architect
-          </button>
-        </div>
-        <div>
-          <input ref={emailRef} type="text" placeholder="email" />
-          <input ref={firstNameRef} type="text" placeholder="First Name" />
-          <input ref={lastNameRef} type="text" placeholder="Last Name" />
-          <input ref={phoneRef} type="text" placeholder="Phone" />
-          <select ref={genderRef} placeholder="gender">
-            <option disabled>Gender</option>
-            <option value={1}>Male</option>
-            <option value={2}>Female</option>
-            <option value={3}>Other/none</option>
-          </select>
-          <input ref={ageRef} type="text" placeholder="current age" />
-          <input ref={passwordRef} type="password" placeholder="password" />
-        </div>
-        <button type="submit">Login</button>
+      <S.RegisterScreen>
+        <h2>Register</h2>
+      </S.RegisterScreen>
+      <S.RegisterForm onSubmit={handleRegister}>
+        <select onChange={(e) => setRole(e.target.value)} placeholder="gender">
+          <option disabled selected>
+            Register as...
+          </option>
+          <option value="clients">Client</option>
+          <option value="architects">Architect</option>
+        </select>
+        <input ref={emailRef} type="text" placeholder="email" />
+        <input ref={firstNameRef} type="text" placeholder="First Name" />
+        <input ref={lastNameRef} type="text" placeholder="Last Name" />
+        <input ref={phoneRef} type="text" placeholder="Phone" />
+        <select ref={genderRef} placeholder="gender">
+          <option disabled selected>
+            Gender
+          </option>
+          <option value={1}>Male</option>
+          <option value={2}>Female</option>
+          <option value={3}>Other/none</option>
+        </select>
+        <input ref={ageRef} type="text" placeholder="current age" />
+        <input ref={passwordRef} type="password" placeholder="password" />
+        <S.ButtonContainer>
+          <Common.FormButton type="submit">Register</Common.FormButton>
+        </S.ButtonContainer>
         {error ? <S.ErrorMessage>{error}</S.ErrorMessage> : null}
-      </form>
+      </S.RegisterForm>
     </S.RegisterContainer>
   );
 };

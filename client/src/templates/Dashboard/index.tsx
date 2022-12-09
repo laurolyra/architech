@@ -20,6 +20,9 @@ const Dashboard = () => {
       console.warn(err?.response?.data);
     }
   };
+
+  console.log('currentUser', currentUser.role);
+
   return (
     <>
       <S.HeaderDashboard>
@@ -30,15 +33,20 @@ const Dashboard = () => {
       </S.HeaderDashboard>
       <S.DashboardContainer>
         <S.InfoandForm>
-          <S.TextTutorial>
-            <h1>Welcome to your dashboard!</h1>
-            <h4>Here you can check your tickets and create new ones.</h4>
-            <h4>
-              Don&apos;t forget to fill all the fields when sending a proposal.
-            </h4>
-            <h4>The more descriptive, the better!</h4>
-          </S.TextTutorial>
-          <HeadForm />
+          {currentUser.role === 'clients' ? (
+            <>
+              <S.TextTutorial>
+                <h1>Welcome to your dashboard!</h1>
+                <h4>Here you can check your tickets and create new ones.</h4>
+                <h4>
+                  Don&apos;t forget to fill all the fields when sending a
+                  proposal.
+                </h4>
+                <h4>The more descriptive, the better!</h4>
+              </S.TextTutorial>
+              <HeadForm />
+            </>
+          ) : null}
         </S.InfoandForm>
         <TicketList />
       </S.DashboardContainer>

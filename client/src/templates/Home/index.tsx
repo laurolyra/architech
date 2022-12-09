@@ -40,24 +40,31 @@ function Home() {
       </S.LogoBorder>
 
       {/* <S.Typography as="p">Texto</S.Typography> */}
-      <h2>Welcome!</h2>
-      <h2>Please sign in</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <button value="clients" onClick={handleChangeRole}>
-            Client
-          </button>
-          <button value="architects" onClick={handleChangeRole}>
-            Architect
-          </button>
-        </div>
-        <div>
-          <input ref={emailRef} type="text" placeholder="email" />
-          <input ref={passwordRef} type="password" placeholder="password" />
-        </div>
-        <Common.FormButton type="submit">Login</Common.FormButton>
-        {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}
-      </form>
+      <S.WelcomeScreen>
+        <h2>Welcome!</h2>
+        <h2>Please sign in or Register</h2>
+      </S.WelcomeScreen>
+      <S.LoginForm onSubmit={handleLogin}>
+        <select onChange={(e) => setRole(e.target.value)} placeholder="gender">
+          <option disabled selected>
+            Login as...
+          </option>
+          <option value="clients">Client</option>
+          <option value="architects">Architect</option>
+        </select>
+        <input ref={emailRef} type="text" placeholder="email" />
+        <input ref={passwordRef} type="password" placeholder="password" />
+        <S.ButtonContainer>
+          <Common.FormButton type="submit">Login</Common.FormButton>
+          {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}
+          <Common.FormButton
+            type="button"
+            onClick={() => navigate('/register')}
+          >
+            Register
+          </Common.FormButton>
+        </S.ButtonContainer>
+      </S.LoginForm>
     </S.HomeContainer>
   );
 }
