@@ -1,13 +1,17 @@
 import React, { useContext, useRef, useState } from 'react';
 import logo from '../../assets/architech_logo_raw.png';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/Authcontext';
 import * as S from './styles';
 
 function Home() {
   const { login } = useContext(AuthContext);
   const [role, setRole] = useState('clients');
+  const [error, setError] = useState(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
 
   const handleChangeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -15,12 +19,17 @@ function Home() {
     setRole(target.value);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     const loginBody = { email: email, password: password };
-    return login(role, loginBody);
+    try {
+      await login(role, loginBody);
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err?.response?.data);
+    }
   };
 
   return (
@@ -46,6 +55,7 @@ function Home() {
           <input ref={passwordRef} type="password" placeholder="password" />
         </div>
         <button type="submit">Login</button>
+        {error ? <p>{error}</p> : null}
       </form>
     </div>
   );
