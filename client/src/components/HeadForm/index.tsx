@@ -1,10 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import api from '../../services/api';
 import * as S from './styles';
 
 const HeadForm = () => {
+  const [architectList, setArchitectList] = useState([]);
+  const [error, setError] = useState(null);
+
   const priceRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const architectRef = useRef<HTMLSelectElement>(null);
+
+  useEffect(() => {
+    const fetchArchitects = async () => {
+      console.log('fetchArchitects');
+      try {
+        const res = await api.get(`/architects/`);
+        setArchitectList(res.data);
+      } catch (err: any) {
+        setError(err?.response?.data);
+      }
+    };
+    fetchArchitects();
+  }, []);
 
   const handleSendTicket = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +36,7 @@ const HeadForm = () => {
     <S.FormContainer onSubmit={handleSendTicket}>
       <h1>Send a Proposal</h1>
       <S.ProposalInput>
-        <label htmlFor="price">Price</label>
+        <label htmlFor="price">Price(R$)</label>
         <input ref={priceRef} type="text" id="price" placeholder="price" />
       </S.ProposalInput>
       <textarea ref={descriptionRef} placeholder="description" />
