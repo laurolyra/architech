@@ -1,5 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/Authcontext';
 
-const Dashboard = () => <h1>Dashboard</h1>;
+function Dashboard() {
+  const { currentUser } = useContext(AuthContext);
+  const { role } = currentUser;
+  return (
+    <>
+      <p>role: {role}</p>
+      <h1>Dashboard</h1>
+    </>
+  );
+}
 
 export default Dashboard;

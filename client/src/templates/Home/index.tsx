@@ -33,7 +33,7 @@ function Home() {
   };
 
   return (
-    <div>
+    <S.HomeContainer>
       <S.LogoBorder>
         <img src={logo} className="App-logo" alt="logo" />
       </S.LogoBorder>
@@ -55,9 +55,9 @@ function Home() {
           <input ref={passwordRef} type="password" placeholder="password" />
         </div>
         <button type="submit">Login</button>
-        {error ? <p>{error}</p> : null}
+        {error ? <S.ErrorMessage>{error}</S.ErrorMessage> : null}
       </form>
-    </div>
+    </S.HomeContainer>
   );
 }
 

@@ -6,20 +6,31 @@ type AuthContextProps = {
   children: ReactNode;
 };
 
+type User = {
+  age: number;
+  email: string;
+  first_name: string;
+  gender: number;
+  id: number;
+  last_name: string;
+  phone: number;
+  role: string;
+};
+
 interface IUserInfo {
-  currentUser: object | null;
+  currentUser: User;
   login: (role: string, inputs: object) => void;
   logout: () => void;
 }
 
 const initialValue = {
-  currentUser: null,
+  currentUser: {},
   setCurrentUser: () => null,
   login: () => null,
   logout: () => null,
 };
 
-export const AuthContext = createContext(initialValue as IUserInfo);
+export const AuthContext = createContext(initialValue as unknown as IUserInfo);
 
 export const AuthContextProvider = ({ children }: AuthContextProps) => {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -30,7 +41,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
   const login = async (role: string, inputs: object) => {
     const res = await api.post(`/${role}/login`, inputs);
     const { token, ...other } = res.data;
-    setCurrentUser(other);
+    setCurrentUser({ ...other, role });
     Cookies.set('auth_token', token);
   };
 
