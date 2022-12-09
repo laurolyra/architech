@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import HeadForm from '../../components/HeadForm';
 import TicketList from '../../components/TicketList';
 import { AuthContext } from '../../context/Authcontext';
+import * as S from './styles';
 
 const Dashboard = () => {
   const { currentUser, logout } = useContext(AuthContext);
   // const [error, setError] = useState(null);
 
-  const { role } = currentUser;
+  const { first_name, role } = currentUser;
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -20,13 +21,19 @@ const Dashboard = () => {
   };
   return (
     <>
-      <p>role: {role}</p>
-      <h1>Dashboard</h1>
-      <button type="button" onClick={handleLogout}>
-        Logout
-      </button>
-      <HeadForm />
-      <TicketList />
+      <S.HeaderDashboard>
+        <h1>Hi, {first_name}</h1>
+        <button type="button" onClick={handleLogout}>
+          Logout
+        </button>
+      </S.HeaderDashboard>
+      <S.DashboardContainer>
+        <S.InfoandForm>
+          <h1>Dashboard</h1>
+          <HeadForm />
+        </S.InfoandForm>
+        <TicketList />
+      </S.DashboardContainer>
     </>
   );
 };

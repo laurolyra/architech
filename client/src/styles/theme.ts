@@ -7,4 +7,7 @@ export default {
   spacing: {
     xl: '3rem',
   },
+  border: {
+    logo: '2rem 0 2rem 0',
+  },
 } as const;
