@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { AuthContext } from '../../context/Authcontext';
 import api from '../../services/api';
+import { IPerson } from '../../types';
 import * as S from './styles';
 
 const HeadForm = () => {
+  const { currentUser } = useContext(AuthContext);
   const [architectList, setArchitectList] = useState([]);
   const [error, setError] = useState(null);
 
@@ -27,14 +30,26 @@ const HeadForm = () => {
     e.preventDefault();
     const price = priceRef.current?.value;
     const description = descriptionRef.current?.value;
-    const architect = architectRef.current?.value;
-
-    console.log(price, description, architect);
+    const architectId = architectRef.current?.value;
+    try {
+      const res = await api.post('/tickets/new', {
+        price,
+        description,
+        architect_id: architectId,
+        client_id: currentUser.id,
+        status: 0,
+      });
+      if (res.data.status === 'INSERT') {
+        window.location.reload();
+      }
+    } catch (err: any) {
+      setError(err?.response?.data);
+    }
   };
 
   return (
     <S.FormContainer onSubmit={handleSendTicket}>
-      <h1>Send a Proposal</h1>
+      <h1>Make a Proposal</h1>
       <S.ProposalInput>
         <label htmlFor="price">Price(R$)</label>
         <input ref={priceRef} type="text" id="price" placeholder="price" />
@@ -42,11 +57,13 @@ const HeadForm = () => {
       <textarea ref={descriptionRef} placeholder="description" />
       <select ref={architectRef} placeholder="description">
         <option disabled>Select an architect</option>
-        <option value="Architect1">Architect1</option>
-        <option value="Architect2">Architect2</option>
-        <option value="Architect3">Architect3</option>
+        {architectList.map((arch: IPerson) => (
+          <option key={arch.id} value={arch.id}>
+            {arch.first_name} {arch.last_name}
+          </option>
+        ))}
       </select>
-      <button type="submit">Send</button>
+      <S.FormButton type="submit">Send</S.FormButton>
     </S.FormContainer>
   );
 };

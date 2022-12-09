@@ -17,5 +17,9 @@ export const InfoandForm = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5rem 0;
+  margin: 5rem 0 1rem;
+  flex-direction: row;
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 `;

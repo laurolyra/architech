@@ -1,19 +1,9 @@
-export interface IArchitect {
+export interface IPerson {
   id: number;
   email: string;
-  password: string;
   first_name: string;
   last_name: string;
-  gender?: number;
-  age?: number;
-}
-
-export interface IClient {
-  id: number;
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
+  phone: 'string';
   gender?: number;
   age?: number;
 }

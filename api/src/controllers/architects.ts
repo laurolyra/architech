@@ -13,8 +13,13 @@ export const getAll = (req: Request, res: Response) => {
       if (results.rows.length === 0) {
         return res.status(404).json("No architect found");
       }
-      res.status(200).json(results.rows);
-    }
+      res.status(200).json(
+        results.rows.map((row) => {
+          const { password, ...otherKeys } = row;
+          return otherKeys;
+        }),
+      );
+    },
   );
 };
 
@@ -30,8 +35,13 @@ export const getByName = (req: Request, res: Response) => {
       if (results.rows.length === 0) {
         return res.status(404).json("No architect found");
       }
-      res.status(200).json(results.rows);
-    }
+      res.status(200).json(
+        results.rows.map((row) => {
+          const { password, ...otherKeys } = row;
+          return otherKeys;
+        }),
+      );
+    },
   );
 };
 
@@ -48,8 +58,9 @@ export const getById = (req: Request, res: Response) => {
       if (results.rows.length === 0) {
         return res.status(404).json("No architect found");
       }
-      res.status(200).json(results.rows[0]);
-    }
+      const { password, ...otherKeys } = results.rows[0];
+      res.status(200).json(otherKeys);
+    },
   );
 };
 
@@ -66,7 +77,7 @@ export const updateArchitect = (req: Request, res: Response) => {
       res
         .status(200)
         .json({ status: results.command, message: "user updated" });
-    }
+    },
   );
 };
 
@@ -83,6 +94,6 @@ export const deleteArchitect = (req: Request, res: Response) => {
         status: results.command,
         message: "User removed from database",
       });
-    }
+    },
   );
 };
