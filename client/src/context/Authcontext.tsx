@@ -40,9 +40,11 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
 
   const login = async (role: string, inputs: object) => {
     const res = await api.post(`/${role}/login`, inputs);
-    const { token, ...other } = res.data;
-    setCurrentUser({ ...other, role });
-    Cookies.set('auth_token', token);
+    if (res.data) {
+      const { token, ...other } = res.data;
+      Cookies.set('auth_token', token);
+      setCurrentUser({ ...other, role });
+    }
   };
 
   const logout = async (role: string) => {

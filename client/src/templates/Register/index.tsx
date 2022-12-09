@@ -7,7 +7,7 @@ import api from '../../services/api';
 
 const Register = () => {
   const [role, setRole] = useState('clients');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -38,10 +38,12 @@ const Register = () => {
       password,
     };
 
-    console.log(reqBody);
-    // const email = emailRef.current?.value;
-    // const password = passwordRef.current?.value;
-    // const loginBody = { email: email, password: password };
+    const validation = [email, firstName, lastName, phone, password];
+
+    if (validation.some((el) => !el)) {
+      return setError('please fill all the fields');
+    }
+
     try {
       const res = await api.post(`/${role}/register`, reqBody);
       if (res.data) {
@@ -62,8 +64,12 @@ const Register = () => {
         <h2>Register</h2>
       </S.RegisterScreen>
       <S.RegisterForm onSubmit={handleRegister}>
-        <select onChange={(e) => setRole(e.target.value)} placeholder="gender">
-          <option disabled selected>
+        <select
+          defaultValue=""
+          onChange={(e) => setRole(e.target.value)}
+          placeholder="gender"
+        >
+          <option disabled value="">
             Register as...
           </option>
           <option value="clients">Client</option>
@@ -73,8 +79,8 @@ const Register = () => {
         <input ref={firstNameRef} type="text" placeholder="First Name" />
         <input ref={lastNameRef} type="text" placeholder="Last Name" />
         <input ref={phoneRef} type="text" placeholder="Phone" />
-        <select ref={genderRef} placeholder="gender">
-          <option disabled selected>
+        <select ref={genderRef} placeholder="gender" defaultValue="">
+          <option disabled value="">
             Gender
           </option>
           <option value={1}>Male</option>
@@ -85,6 +91,9 @@ const Register = () => {
         <input ref={passwordRef} type="password" placeholder="password" />
         <S.ButtonContainer>
           <Common.FormButton type="submit">Register</Common.FormButton>
+          <Common.FormButton type="button" onClick={() => navigate('/')}>
+            Back
+          </Common.FormButton>
         </S.ButtonContainer>
         {error ? <S.ErrorMessage>{error}</S.ErrorMessage> : null}
       </S.RegisterForm>

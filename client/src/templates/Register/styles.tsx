@@ -45,5 +45,5 @@ export const RegisterForm = styled.form`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 `;

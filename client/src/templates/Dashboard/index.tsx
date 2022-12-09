@@ -21,8 +21,6 @@ const Dashboard = () => {
     }
   };
 
-  console.log('currentUser', currentUser.role);
-
   return (
     <>
       <S.HeaderDashboard>
@@ -46,7 +44,15 @@ const Dashboard = () => {
               </S.TextTutorial>
               <HeadForm />
             </>
-          ) : null}
+          ) : (
+            <S.TextTutorial>
+              <h1>Welcome to your dashboard!</h1>
+              <h4>
+                Here you can check Proposals sent by users registered here.
+              </h4>
+              <h4>Feel free to accept or negate them</h4>
+            </S.TextTutorial>
+          )}
         </S.InfoandForm>
         <TicketList />
       </S.DashboardContainer>

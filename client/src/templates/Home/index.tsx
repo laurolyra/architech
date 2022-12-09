@@ -14,12 +14,6 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const handleChangeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const target = e.target as HTMLInputElement;
-    setRole(target.value);
-  };
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const email = emailRef.current?.value;
@@ -45,8 +39,12 @@ function Home() {
         <h2>Please sign in or Register</h2>
       </S.WelcomeScreen>
       <S.LoginForm onSubmit={handleLogin}>
-        <select onChange={(e) => setRole(e.target.value)} placeholder="gender">
-          <option disabled selected>
+        <select
+          defaultValue=""
+          onChange={(e) => setRole(e.target.value)}
+          placeholder="gender"
+        >
+          <option disabled value="">
             Login as...
           </option>
           <option value="clients">Client</option>
@@ -55,15 +53,15 @@ function Home() {
         <input ref={emailRef} type="text" placeholder="email" />
         <input ref={passwordRef} type="password" placeholder="password" />
         <S.ButtonContainer>
-          <Common.FormButton type="submit">Login</Common.FormButton>
-          {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}
           <Common.FormButton
             type="button"
             onClick={() => navigate('/register')}
           >
             Register
           </Common.FormButton>
+          <Common.FormButton type="submit">Login</Common.FormButton>
         </S.ButtonContainer>
+        {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}
       </S.LoginForm>
     </S.HomeContainer>
   );

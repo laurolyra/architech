@@ -29,7 +29,6 @@ export const register = (req: Request, res: Response) => {
       (email, password, first_name, last_name, gender, age, phone)
       VALUES
       ($1, $2, $3, $4, $5, $6, $7)`;
-    console.log("bodywithHash", bodyWithHash);
     await pool.query(
       registerQuery,
       [

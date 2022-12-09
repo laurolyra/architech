@@ -17,7 +17,6 @@ export const getAll = (req: Request, res: Response) => {
 
 export const groupTickets = (req: Request, res: Response) => {
   const { body } = req;
-  // console.log("body", body);
   const filterByParties = `
     SELECT
     t.id,

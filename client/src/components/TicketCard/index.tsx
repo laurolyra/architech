@@ -13,7 +13,6 @@ type TicketProps = {
 const TicketCard = ({ ticket, responsible }: TicketProps) => {
   const { currentUser } = useContext(AuthContext);
   const [error, setError] = useState(null);
-  console.log('responsible', responsible);
   const generateStatus = (status: number) => {
     switch (status) {
       case -1:
@@ -28,9 +27,19 @@ const TicketCard = ({ ticket, responsible }: TicketProps) => {
   };
 
   const handleDelete = async () => {
-    console.log('fetchArchitects');
     try {
       const res = await api.put(`/tickets/${ticket.id}/archive`);
+      if (res.status) {
+        window.location.reload();
+      }
+    } catch (err: any) {
+      setError(err?.response?.data);
+    }
+  };
+
+  const handleUpdate = async (status: number) => {
+    try {
+      const res = await api.put(`/tickets/${ticket.id}`, { ...ticket, status });
       if (res.status) {
         window.location.reload();
       }
@@ -61,7 +70,22 @@ const TicketCard = ({ ticket, responsible }: TicketProps) => {
             Delete
           </Common.FormButton>
         ) : (
-          <p>Arq</p>
+          <S.ArchitectButtonRow>
+            <Common.FormButton
+              type="button"
+              disabled={ticket.status !== 0}
+              onClick={() => handleUpdate(1)}
+            >
+              Accept
+            </Common.FormButton>
+            <Common.FormButton
+              type="button"
+              disabled={ticket.status !== 0}
+              onClick={() => handleUpdate(3)}
+            >
+              Refuse
+            </Common.FormButton>
+          </S.ArchitectButtonRow>
         )}
       </S.TitleStatusWrapper>
       {error ? <Common.ErrorMessage>{error}</Common.ErrorMessage> : null}

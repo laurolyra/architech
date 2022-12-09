@@ -16,7 +16,6 @@ const HeadForm = () => {
 
   useEffect(() => {
     const fetchArchitects = async () => {
-      console.log('fetchArchitects');
       try {
         const res = await api.get(`/architects/`);
         setArchitectList(res.data);
@@ -60,8 +59,8 @@ const HeadForm = () => {
         <input ref={priceRef} type="text" id="price" placeholder="price" />
       </S.ProposalInput>
       <textarea ref={descriptionRef} placeholder="description" />
-      <select ref={architectRef} placeholder="description">
-        <option selected disabled>
+      <select ref={architectRef} defaultValue="" placeholder="description">
+        <option value="" disabled>
           Select an architect
         </option>
         {architectList.map((arch: IPerson) => (

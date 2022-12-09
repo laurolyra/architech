@@ -21,3 +21,9 @@ export const TitleStatusWrapper = styled.div`
     flex-direction: column;
   }
 `;
+
+export const ArchitectButtonRow = styled.div`
+  display: flex;
+  min-width: 16rem;
+  justify-content: space-between;
+`;

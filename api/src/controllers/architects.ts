@@ -46,7 +46,6 @@ export const getByName = (req: Request, res: Response) => {
 };
 
 export const getById = (req: Request, res: Response) => {
-  // console.log("getById", req);
   const { params } = req;
   pool.query(
     "SELECT * FROM architects WHERE id = ($1)",

@@ -9,9 +9,8 @@ const api = axios.create({
     'Content-type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     Accept: 'application/json',
+    Authorization: `Bearer ${token}`,
   },
 });
-
-api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 export default api;
