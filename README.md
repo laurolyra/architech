@@ -1,6 +1,8 @@
 # Projeto Architech
+![Imagem gerada cominteligência artificial de looka.com](https://user-images.githubusercontent.com/50916624/206824151-9eb9498d-6672-43d8-9b29-37cc6f0a2dd5.png?raw=true)
 
-Este projeto consiste num MVP de uma aplicação fullstack, construida com `nodeJS` junto com seu framework `express`. No front, foi utilizada a biblioteca `React` juntamente com `Styled components` para estiilização. O banco de dados foi o `postgreSQL` e tanto o front quando o back-end se valeram do superset `Typescript`
+Este projeto consiste num MVP de uma aplicação fullstack, construida com `nodeJS` junto com seu framework `express`. No front, foi utilizada a biblioteca `React` juntamente com `Styled components` para estiilização. O banco de dad!
+os foi o `postgreSQL` e tanto o front quando o back-end se valeram do superset `Typescript`
 
 ## Instalação
 Primeiramente, é importante que a máquina possua o `postgres` instalado.
@@ -22,6 +24,7 @@ Trata-se de uma aplicação MVP onde clientes podem se cadastrar e enviar propos
 Além das tecnologias a serem mencionadas abaixo, é importante destacar que desenvolvi a aplicação tendo como norte os princípios de _git flow_ e de _conventional commits_, de forma que tenho feito os desenvolvimentos em _branches_ que visam alterar a branch _develop_ - tanto isso é verdade que configurei regras específicas para impedir o envio de informações (_push_) direto para a branch _main_.
 Além disso, cada branch e cada commit tentam dar um resumo do que aconteceu em cada mudança - quer a criação de uma nova _feature_ ou o conserto de outras funções, bem como o envio desta documentação.
 ### back-end
+![Diagrama sem nome drawio](https://user-images.githubusercontent.com/50916624/206824198-e10ab73d-f0da-4373-9c37-fff35a09df99.png?raw=true)
 A aplicação possui um backend com endpoints visando atender às três grandes entidades planejadas para essa aplicação: 
 - `clients`, a qual comporta os clientes, com dados pessoais atrelados e senha criptografada com aucílio da biblioteca `bcrypt`;
 - `architects` que, mesmo recebendo os exatos valores da entidade `clients` entendeu-se por bem mantê-los em separado, para que um cliente possa acessar a aplicação como arquiteto e vice versa, a fim de usufruir de todas as funcionalidades;
