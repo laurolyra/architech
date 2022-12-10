@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:8001/api';
 const token = Cookies.get('auth_token');
-export const api = axios.create({
+const api = axios.create({
   baseURL,
   headers: {
     'Content-type': 'application/json',
@@ -12,3 +12,5 @@ export const api = axios.create({
     Authorization: `Bearer ${token}`,
   },
 });
+
+export default api;

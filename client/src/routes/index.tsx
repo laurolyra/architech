@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Home from '../templates/Home';
 import Dashboard from '../templates/Dashboard';
+import Register from '../templates/Register';
 
 type PrivateRouteProps = {
   children: ReactNode;
@@ -15,6 +16,7 @@ const MainRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/register" element={<Register />} />
       <Route
         path="/dashboard"
         element={

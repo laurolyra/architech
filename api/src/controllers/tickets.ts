@@ -11,13 +11,12 @@ export const getAll = (req: Request, res: Response) => {
         return res.status(500).json(error);
       }
       res.status(200).json(results.rows);
-    }
+    },
   );
 };
 
 export const groupTickets = (req: Request, res: Response) => {
   const { body } = req;
-  // console.log("body", body);
   const filterByParties = `
     SELECT
     t.id,
@@ -47,7 +46,7 @@ export const groupTickets = (req: Request, res: Response) => {
         return res.status(404).json("No ticket found");
       }
       res.status(200).json(results.rows[0]);
-    }
+    },
   );
 };
 
@@ -64,7 +63,7 @@ export const getById = (req: Request, res: Response) => {
         return res.status(404).json("No ticket found");
       }
       res.status(200).json(results.rows[0]);
-    }
+    },
   );
 };
 
@@ -83,7 +82,7 @@ export const updateTicket = (req: Request, res: Response) => {
       res
         .status(200)
         .json({ status: results.command, message: "user updated" });
-    }
+    },
   );
 };
 
@@ -100,30 +99,28 @@ export const archiveTicket = (req: Request, res: Response) => {
         status: results.command,
         message: "Ticket removed from database",
       });
-    }
+    },
   );
 };
 
 export const createTicket = async (req: Request, res: Response) => {
   const { architect_id, description, price, client_id, status } = req.body;
 
-  const postTicket = async () => {
-    const registerQuery = `INSERT INTO tickets
+  const registerQuery = `INSERT INTO tickets
       (architect_id, description, price, client_id, status)
       VALUES
       ($1, $2, $3, $4, $5)`;
-    await pool.query(
-      registerQuery,
-      [architect_id, description, price, client_id, status],
-      (error: any, results: ResultBuilder) => {
-        if (error) {
-          return res.status(500).json(error);
-        }
-        return res.status(200).json({
-          status: results.command,
-          message: "Ticket Successfully created",
-        });
+  await pool.query(
+    registerQuery,
+    [architect_id, description, price, client_id, status],
+    (error: any, results: ResultBuilder) => {
+      if (error) {
+        return res.status(500).json(error);
       }
-    );
-  };
+      return res.status(200).json({
+        status: results.command,
+        message: "Ticket Successfully created",
+      });
+    },
+  );
 };

@@ -6,24 +6,30 @@ export const LogoBorder = styled.div`
     padding: ${theme.spacing.xl};
     background-color: ${theme.colors.blueLight};
     border-radius: 2rem 0 2rem 0;
-    box-shadow: ${theme.boxShadow.small};
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     margin: 1rem;
   `}
 `;
 
-export const HomeContainer = styled.div`
+export const RegisterContainer = styled.div`
   max-width: 30rem;
   margin: auto;
 `;
 
-export const WelcomeScreen = styled.div`
+export const ErrorMessage = styled.h4`
+  ${({ theme }) => css`
+    color: ${theme.colors.danger};
+  `}
+`;
+
+export const RegisterScreen = styled.div`
   ${({ theme }) => css`
     text-align: center;
     color: ${theme.colors.blueLight};
   `}
 `;
 
-export const LoginForm = styled.form`
+export const RegisterForm = styled.form`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
