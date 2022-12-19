@@ -21,7 +21,6 @@ function Home() {
     const loginBody = { email: email, password: password };
     try {
       await login(role, loginBody);
-      navigate('/dashboard');
     } catch (err: any) {
       setError(err?.response?.data);
     }
