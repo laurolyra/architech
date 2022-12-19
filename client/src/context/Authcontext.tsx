@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import api from '../services/api';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 type AuthContextProps = {
   children: ReactNode;
@@ -38,12 +39,15 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     return localStorageItem || initialValue.currentUser;
   });
 
+  // const navigate = useNavigate();
+
   const login = async (role: string, inputs: object) => {
     const res = await api.post(`/${role}/login`, inputs);
     if (res.data) {
       const { token, ...other } = res.data;
       Cookies.set('auth_token', token);
       setCurrentUser({ ...other, role });
+      window.location.assign('/dashboard');
     }
   };
 
