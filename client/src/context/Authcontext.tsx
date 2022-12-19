@@ -39,8 +39,6 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     return localStorageItem || initialValue.currentUser;
   });
 
-  // const navigate = useNavigate();
-
   const login = async (role: string, inputs: object) => {
     const res = await api.post(`/${role}/login`, inputs);
     if (res.data) {
